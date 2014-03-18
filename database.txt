@@ -1,0 +1,22 @@
+ @Override
+  public void onCreate(SQLiteDatabase database) {
+    String query;
+    query = "CREATE TABLE animals ( animalId INTEGER PRIMARY KEY, animalName TEXT)";
+    database.execSQL(query);
+    Log.d(LOGCAT,"animals Created");
+  }
+  @Override
+  public void onUpgrade(SQLiteDatabase database, int version_old, int current_version) {
+    String query;
+    query = "DROP TABLE IF EXISTS animals";
+    database.execSQL(query);
+    onCreate(database);
+  }
+ 
+  public void insertAnimal(HashMap<String, String> queryValues) {
+    SQLiteDatabase database = this.getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put("animalName", queryValues.get("animalName"));
+    database.insert("animals", null, values);
+    database.close();
+  }
